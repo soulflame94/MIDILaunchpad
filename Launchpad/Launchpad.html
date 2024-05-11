@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Launchpad Neon</title>
+<link rel="stylesheet" href="neon2.css"> <!-- Enlaza tu archivo CSS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script> <!-- Enlaza Howler.js -->
+</head>
+<body>
+
+    <div class="launchpad">
+        <div class="row">
+            <button id="button1" class="neon-button1 neon-button" data-key="1" onclick="toggleSound(0)"></button>
+            <button id="button2" class="neon-button2 neon-button" data-key="2" onclick="toggleSound(1)"></button>
+            <button id="button3" class="neon-button3 neon-button" data-key="3" onclick="toggleSound(2)"></button>
+            <button id="button4" class="neon-button4 neon-button" data-key="4" onclick="toggleSound(3)"></button>
+        </div>
+        <div class="row">
+            <button id="button5" class="neon-button5 neon-button" data-key="q" onclick="toggleSound(4)"></button>
+            <button id="button6" class="neon-button6 neon-button" data-key="w" onclick="toggleSound(5)"></button>
+            <button id="button7" class="neon-button7 neon-button" data-key="e" onclick="toggleSound(6)"></button>
+            <button id="button8" class="neon-button8 neon-button" data-key="r" onclick="toggleSound(7)"></button>
+        </div>
+        <div class="row">
+            <button id="button9" class="neon-button9 neon-button" data-key="a" onclick="toggleSound(8)"></button>
+            <button id="button10" class="neon-button10 neon-button" data-key="s" onclick="toggleSound(9)"></button>
+            <button id="button11" class="neon-button11 neon-button" data-key="d" onclick="toggleSound(10)"></button>
+            <button id="button12" class="neon-button12 neon-button" data-key="f" onclick="toggleSound(11)"></button>
+        </div>
+        <div class="row">
+            <button id="button13" class="neon-button13 neon-button" data-key="z" onclick="toggleSound(12)"></button>
+            <button id="button14" class="neon-button14 neon-button" data-key="x" onclick="toggleSound(13)"></button>
+            <button id="button15" class="neon-button15 neon-button" data-key="c" onclick="toggleSound(14)"></button>
+            <button id="button16" class="neon-button16 neon-button" data-key="v" onclick="toggleSound(15)"></button>
+        </div>
+    </div>
+
+    <script>
+        // Define los sonidos para cada botón
+        var sounds = [
+            new Howl({ src: ['sound1.mp3'] }),
+            new Howl({ src: ['sound2.mp3'] }),
+            new Howl({ src: ['sound3.mp3'] }),
+            new Howl({ src: ['sound4.mp3'] }),
+            new Howl({ src: ['sound5.mp3'] }),
+            new Howl({ src: ['sound6.mp3'] }),
+            new Howl({ src: ['sound7.mp3'] }),
+            new Howl({ src: ['sound8.mp3'] }),
+            new Howl({ src: ['sound9.mp3'] }),
+            new Howl({ src: ['sound10.mp3'] }),
+            new Howl({ src: ['sound11.mp3'] }),
+            new Howl({ src: ['sound12.mp3'] }),
+            new Howl({ src: ['sound13.mp3'] }),
+            new Howl({ src: ['sound14.mp3'] }),
+            new Howl({ src: ['sound15.mp3'] }),
+            new Howl({ src: ['sound16.mp3'] }),
+            // Agrega más sonidos según sea necesario
+        ];
+    
+        // Array para mantener el estado de cada botón (true = activado, false = desactivado)
+        var buttonStates = new Array(sounds.length).fill(false);
+    
+        
+        // Función para activar/desactivar el sonido de un botón
+        function toggleSound(index) {
+            if (index >= 0 && index < sounds.length) {
+                if (buttonStates[index]) {
+                    // Si el botón está activado, desactívalo y detén el sonido
+                    buttonStates[index] = false;
+                    sounds[index].stop();
+                    // Actualiza el aspecto visual del botón cuando el sonido se detiene
+                    updateButtonVisual(index);
+                } else {
+                    // Si el botón está desactivado, actívalo y reproduce el sonido
+                    buttonStates[index] = true;
+                    sounds[index].play();
+                    // Actualiza el aspecto visual del botón cuando se reproduce el sonido
+                    updateButtonVisual(index);
+                }
+            }
+        }
+    
+    
+        // Función para actualizar el aspecto visual del botón según su estado
+        function updateButtonVisual(index) {
+            var button = document.getElementById("button" + (index + 1));
+            if (buttonStates[index]) {
+                // Si el botón está activado, establece su color de fondo
+                button.style.backgroundColor = "var(--color5)"; // Cambia esto según tu CSS
+            } else {
+                // Si el botón está desactivado, establece su color de fondo como negro
+                button.style.backgroundColor = "transparent"; // Cambia esto según tu preferencia de color
+            }
+        }
+    
+        // Evento para escuchar las teclas presionadas
+        document.addEventListener("keydown", function(event) {
+            // Busca el botón correspondiente a la tecla presionada
+            var button = document.querySelector(`button[data-key="${event.key}"]`);
+            if (button) {
+                // Si se encuentra el botón, simula un clic en él
+                button.click();
+            }
+        });
+    </script>
+    
+    </body>
+    </html>
